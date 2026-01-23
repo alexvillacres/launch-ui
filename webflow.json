@@ -1,0 +1,8 @@
+{
+    "library": {
+        "name": "Launch UI",
+        "components": [
+            "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+        ]
+    }
+}
