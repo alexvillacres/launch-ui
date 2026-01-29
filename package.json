@@ -15,7 +15,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "@webflow/data-types": "^1.2.0",
     "@webflow/react": "^1.2.0",
-    "@webflow/webflow-cli": "^1.11.0",
+    "@webflow/webflow-cli": "^1.11.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.563.0",
