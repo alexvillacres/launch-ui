@@ -16,7 +16,7 @@
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
         "shadcn": "^3.7.0",
-        "swiper": "^12.0.3",
+        "swiper": "^12.1.0",
         "tailwind-merge": "^3.4.0",
         "tailwindcss": "^4.1.17",
         "tw-animate-css": "^1.4.0",
@@ -1638,7 +1638,7 @@
 
     "supports-preserve-symlinks-flag": ["supports-preserve-symlinks-flag@1.0.0", "", {}, "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="],
 
-    "swiper": ["swiper@12.0.3", "", {}, "sha512-BHd6U1VPEIksrXlyXjMmRWO0onmdNPaTAFduzqR3pgjvi7KfmUCAm/0cj49u2D7B0zNjMw02TSeXfinC1hDCXg=="],
+    "swiper": ["swiper@12.1.0", "", {}, "sha512-BD4CpAOOyEvZ2f0CDx362ea+vmOwukVcmbsQx+0BhRIaBUz8wvcCd//E7RFmvBZCrfyqXCHUVqmgUwts6ywlxw=="],
 
     "tabbable": ["tabbable@6.4.0", "", {}, "sha512-05PUHKSNE8ou2dwIxTngl4EzcnsCDZGJ/iCLtDflR/SHB/ny14rXc+qU5P4mG9JkusiV7EivzY9Mhm55AzAvCg=="],
 
