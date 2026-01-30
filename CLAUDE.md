@@ -8,11 +8,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- `npm run dev` - Start Vite dev server
-- `npm run build` - TypeScript check + Vite production build
-- `npm run lint` - Run ESLint
-- `npm run preview` - Preview production build
-- `npx webflow library share` - Publish component library to Webflow Workspace
+- `bun run dev` - Start Vite dev server
+- `bun run build` - TypeScript check + Vite production build
+- `bun run lint` - Run ESLint
+- `bun run preview` - Preview production build
+- `bunx webflow library share` - Publish component library to Webflow Workspace
 
 ## Architecture
 
