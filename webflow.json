@@ -5,7 +5,8 @@
       "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
     ],
     "id": "launch-ui",
-    "description": ""
+    "description": "",
+    "globals": "./src/globals.ts"
   },
   "telemetry": {
     "global": {

@@ -1,10 +1,9 @@
 import { useState, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 
+// @ts-expect-error - CSS imports don't have type declarations
 import 'swiper/css';
-import 'swiper/css/pagination';
 
 const images = [
   'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
@@ -25,16 +24,16 @@ export default function Carousel() {
     setActiveIndex(index);
   };
 
+  const handleDotClick = (index: number) => {
+    swiperRef.current?.slideTo(index);
+    setActiveIndex(index);
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full max-w-full overflow-hidden">
       <Swiper
-        modules={[Pagination]}
-        spaceBetween={30}
+        spaceBetween={24}
         slidesPerView={1}
-        pagination={{
-          clickable: true,
-          el: '.carousel-pagination',
-        }}
         onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
@@ -43,7 +42,7 @@ export default function Carousel() {
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
-            <div className="w-full h-[400px] rounded-lg overflow-hidden">
+            <div className="w-full rounded-lg overflow-hidden aspect-[804/532]">
               <img
                 src={image}
                 alt={`Slide ${index + 1}`}
@@ -54,13 +53,14 @@ export default function Carousel() {
         ))}
       </Swiper>
       
-      <div className="flex justify-between items-center gap-4">
-        <div className="flex gap-2 justify-center">
+      <div className="flex items-center gap-4">
+        <div className="flex gap-2 flex-grow">
           {tabLabels.map((label, index) => (
             <button
               key={index}
               onClick={() => handleTabClick(index)}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              type="button"
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                 activeIndex === index
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-muted text-muted-foreground hover:bg-muted/80'
@@ -70,7 +70,21 @@ export default function Carousel() {
             </button>
           ))}
         </div>
-        <div className="carousel-pagination" />
+        <div className="flex gap-2 items-center flex-shrink-0">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handleDotClick(index)}
+              type="button"
+              aria-label={`Go to slide ${index + 1}`}
+              className={`transition-all duration-300 rounded-full ${
+                activeIndex === index
+                  ? 'w-8 h-2 bg-primary'
+                  : 'w-2 h-2 bg-muted-foreground/40 hover:bg-muted-foreground/60'
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

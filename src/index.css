@@ -129,27 +129,45 @@
     @apply font-sans;
   }
 
-  /* Swiper pagination dots styling */
+  /* Swiper pagination base styles - required for Webflow bundling */
+  .swiper-pagination {
+    position: relative;
+    text-align: center;
+    transition: 300ms opacity;
+    z-index: 10;
+  }
+
   .swiper-pagination-bullet {
-    @apply bg-muted-foreground/50 opacity-100;
+    display: inline-block;
     width: 12px;
     height: 12px;
+    border-radius: 50%;
+    background: var(--muted-foreground);
+    opacity: 0.5;
+    cursor: pointer;
     transition: all 0.3s ease;
   }
 
   .swiper-pagination-bullet-active {
-    @apply bg-primary;
+    background: var(--primary);
+    opacity: 1;
     width: 32px;
     border-radius: 6px;
   }
 
-  .carousel-pagination {
-    @apply relative w-full flex justify-end items-center gap-1;
+  .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
+  .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 4px;
   }
 
-  .carousel-pagination .swiper-pagination {
+  /* Custom pagination container */
+  .carousel-pagination {
+    @apply relative flex justify-end items-center;
+    width: auto;
+  }
+
+  .carousel-pagination.swiper-pagination {
     position: relative;
     width: auto;
-    text-align: right;
   }
 }
