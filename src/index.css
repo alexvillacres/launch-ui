@@ -182,3 +182,17 @@
     width: 100%;
   }
 }
+
+/* Carousel autoplay progress animation */
+@keyframes carousel-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.animate-carousel-progress {
+  animation: carousel-progress linear forwards;
+}

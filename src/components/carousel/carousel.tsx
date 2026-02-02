@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 
@@ -29,6 +29,8 @@ interface CarouselProps {
   icon5?: React.ReactNode;
   numberOfSlides?: number;
   spaceBetween?: number;
+  autoplay?: boolean;
+  autoplayDelay?: number;
 }
 
 interface SlideData {
@@ -91,20 +93,81 @@ function getActiveSlides(props: CarouselProps): SlideData[] {
 }
 
 export default function Carousel(props: CarouselProps) {
-  const { spaceBetween = 24 } = props;
+  const { spaceBetween = 24, autoplay = true, autoplayDelay = 5000 } = props;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoplayActive, setIsAutoplayActive] = useState(autoplay);
+  const [isInView, setIsInView] = useState(false);
   const swiperRef = useRef<SwiperType | null>(null);
+  const autoplayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Build active slides array
   const slides = getActiveSlides(props);
   const slideCount = slides.length;
 
+  // Intersection Observer to detect when carousel is in view
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const stopAutoplay = useCallback(() => {
+    if (autoplayTimerRef.current) {
+      clearTimeout(autoplayTimerRef.current);
+      autoplayTimerRef.current = null;
+    }
+    setIsAutoplayActive(false);
+  }, []);
+
+  const advanceSlide = useCallback(() => {
+    if (!swiperRef.current || slideCount === 0) return;
+    const nextIndex = (activeIndex + 1) % slideCount;
+    swiperRef.current.slideTo(nextIndex);
+  }, [activeIndex, slideCount]);
+
+  // Autoplay effect - only runs when in view
+  useEffect(() => {
+    if (!isAutoplayActive || !isInView || slideCount <= 1) return;
+
+    autoplayTimerRef.current = setTimeout(() => {
+      advanceSlide();
+    }, autoplayDelay);
+
+    return () => {
+      if (autoplayTimerRef.current) {
+        clearTimeout(autoplayTimerRef.current);
+      }
+    };
+  }, [
+    isAutoplayActive,
+    isInView,
+    activeIndex,
+    autoplayDelay,
+    slideCount,
+    advanceSlide,
+  ]);
+
   const handleTabClick = (index: number) => {
+    stopAutoplay();
     swiperRef.current?.slideTo(index);
     setActiveIndex(index);
   };
 
   const handleDotClick = (index: number) => {
+    stopAutoplay();
     swiperRef.current?.slideTo(index);
     setActiveIndex(index);
   };
@@ -112,7 +175,7 @@ export default function Carousel(props: CarouselProps) {
   // Render a slide image
   const renderSlide = (slide: SlideData) => {
     return (
-      <div className="w-full rounded-lg overflow-hidden aspect-[804/532]">
+      <div className="w-full rounded-lg overflow-hidden">
         <img
           src={slide.image.src}
           alt={slide.image.alt || slide.label}
@@ -133,7 +196,10 @@ export default function Carousel(props: CarouselProps) {
   }
 
   return (
-    <div className="w-full flex flex-col gap-4 max-w-full overflow-hidden">
+    <div
+      ref={containerRef}
+      className="w-full flex flex-col gap-4 max-w-full overflow-hidden"
+    >
       <div className="hidden md:flex items-center gap-4 h-[22px]">
         {slideCount > 0 && (
           <div className="flex gap-4 flex-grow">
@@ -163,26 +229,45 @@ export default function Carousel(props: CarouselProps) {
               onClick={() => handleDotClick(index)}
               type="button"
               aria-label={`Go to slide ${index + 1}`}
-              className={`transition-all duration-300 rounded-full cursor-pointer ${
+              className={`relative overflow-hidden transition-all duration-500 rounded-full cursor-pointer ${
                 activeIndex === index
-                  ? "w-8 h-2 bg-[#3472D5]"
-                  : "w-2 h-2 bg-[#1F1D19]/20 hover:bg-[#1F1D19]/40"
+                  ? "w-8 h-2 bg-[#1F1D19]/15"
+                  : "w-2 h-2 bg-[#1F1D19]/15 hover:bg-[#1F1D19]/40"
               }`}
-            />
+            >
+              {activeIndex === index && isAutoplayActive && isInView && (
+                <div
+                  key={`progress-${activeIndex}-${isInView}`}
+                  className="absolute inset-0 bg-[#3472D5] rounded-full origin-left animate-carousel-progress"
+                  style={{
+                    animationDuration: `${autoplayDelay}ms`,
+                  }}
+                />
+              )}
+              {activeIndex === index && (!isAutoplayActive || !isInView) && (
+                <div className="absolute inset-0 bg-[#3472D5] rounded-full" />
+              )}
+            </button>
           ))}
         </div>
       </div>
       <Swiper
         spaceBetween={spaceBetween}
         slidesPerView={1}
+        speed={500}
+        allowTouchMove={true}
+        grabCursor={true}
+        onTouchStart={() => stopAutoplay()}
         onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        className="w-full bg-[#F0EEEA] rounded-md overflow-hidden"
+        className="w-full bg-[#F0EEEA] rounded-md lg:max-w-[806px]"
       >
         {slides.map((slide, index) => (
-          <SwiperSlide key={index}>{renderSlide(slide)}</SwiperSlide>
+          <SwiperSlide className="w-full lg:aspect-[804/532]" key={index}>
+            {renderSlide(slide)}
+          </SwiperSlide>
         ))}
       </Swiper>
     </div>

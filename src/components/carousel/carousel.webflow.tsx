@@ -112,6 +112,22 @@ const CarouselComponent = declareComponent(Carousel, {
       min: 0,
       max: 100,
     }),
+
+    autoplay: props.Boolean({
+      name: 'Autoplay',
+      group: 'Settings',
+      tooltip: 'Automatically advance slides',
+      defaultValue: true,
+    }),
+
+    autoplayDelay: props.Number({
+      name: 'Autoplay Delay',
+      group: 'Settings',
+      tooltip: 'Time between slides in milliseconds',
+      defaultValue: 5000,
+      min: 1000,
+      max: 20000,
+    }),
   },
 });
 
