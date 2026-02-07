@@ -43,7 +43,7 @@ interface SlideData {
 function getSlideLabel(
   explicitLabel: string | undefined,
   altText: string | undefined,
-  slideNumber: number,
+  slideNumber: number
 ): string {
   if (explicitLabel && explicitLabel.trim() !== "") {
     return explicitLabel;
@@ -74,7 +74,7 @@ function getActiveSlides(props: CarouselProps): SlideData[] {
         label: getSlideLabel(
           slide.label,
           slide.image.alt,
-          validSlides.length + 1,
+          validSlides.length + 1
         ),
         icon: slide.icon,
       });
@@ -85,7 +85,7 @@ function getActiveSlides(props: CarouselProps): SlideData[] {
   if (props.numberOfSlides && props.numberOfSlides > 0) {
     return validSlides.slice(
       0,
-      Math.min(props.numberOfSlides, validSlides.length),
+      Math.min(props.numberOfSlides, validSlides.length)
     );
   }
 
@@ -114,7 +114,7 @@ export default function Carousel(props: CarouselProps) {
       ([entry]) => {
         setIsInView(entry.isIntersecting);
       },
-      { threshold: 0.3 },
+      { threshold: 0.3 }
     );
 
     observer.observe(container);
@@ -253,7 +253,23 @@ export default function Carousel(props: CarouselProps) {
       </div>
       <Swiper
         spaceBetween={spaceBetween}
-        slidesPerView={1}
+        breakpoints={{
+          320: {
+            slidesPerView: 1.2,
+            spaceBetween: 16,
+          },
+          640: {
+            slidesPerView: 1.2,
+            spaceBetween: 16,
+          },
+          768: {
+            slidesPerView: 1.3,
+            spaceBetween: 24,
+          },
+          1024: {
+            slidesPerView: 1,
+          },
+        }}
         speed={500}
         allowTouchMove={true}
         grabCursor={true}
@@ -262,10 +278,10 @@ export default function Carousel(props: CarouselProps) {
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        className="w-full bg-[#F0EEEA] rounded-md lg:max-w-[806px]"
+        className="w-full bg-transparent rounded-md lg:max-w-[806px]"
       >
         {slides.map((slide, index) => (
-          <SwiperSlide className="w-full lg:aspect-[804/532]" key={index}>
+          <SwiperSlide className="w-full lg:aspect-[806/532]" key={index}>
             {renderSlide(slide)}
           </SwiperSlide>
         ))}

@@ -1,12 +1,35 @@
 import Carousel from "./components/carousel/carousel";
 import { ComponentContainer } from "./components/component-container";
 import { Trees, Mountain, Waves } from "lucide-react";
+import Tabs from "./components/tabs/tabs";
 
 export function App() {
   return (
     <div className="bg-background w-full">
       <div className="max-w-[1192px] mx-auto p-8 space-y-4">
-        <div className="w-full h-[200svh]"></div>
+        <Tabs
+          image1={{
+            src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop",
+            alt: "Forest",
+          }}
+          title1="Centralize"
+          description1="One home for all product comms. Stop losing weeks to scattered Slack threads, emails, and docs. Ship updates faster and reach every impacted stakeholder."
+          icon1={<Trees />}
+          image2={{
+            src: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=600&fit=crop",
+            alt: "Mountain",
+          }}
+          title2="Mountain"
+          description2="Not every customer cares about every change. Reduce noise, increase adoption, and protect CSAT by targeting the right people with the right message every time."
+          icon2={<Mountain />}
+          image3={{
+            src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop",
+            alt: "Beach",
+          }}
+          title3="Beach"
+          description3="See exactly which updates move the needle. Track engagement, adoption, and churn risk per release, then double down on the updates driving revenue."
+          icon3={<Waves />}
+        />
         <ComponentContainer className="flex flex-row gap-4">
           <Carousel
             image1={{

@@ -14,7 +14,7 @@
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.147 0.004 49.25);
+  --foreground: #21201C;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.147 0.004 49.25);
   --popover: oklch(1 0 0);
@@ -24,11 +24,12 @@
   --secondary: oklch(0.97 0.001 106.424);
   --secondary-foreground: oklch(0.216 0.006 56.043);
   --muted: oklch(0.97 0.001 106.424);
-  --muted-foreground: oklch(0.553 0.013 58.071);
+  --muted-foreground: #63635E;
   --accent: oklch(0.97 0.001 106.424);
   --accent-foreground: oklch(0.216 0.006 56.043);
+  --surface: #f3f3f1;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.923 0.003 48.717);
+  --border: #E2E1DE;
   --input: oklch(0.923 0.003 48.717);
   --ring: oklch(0.709 0.01 56.259);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -114,6 +115,7 @@
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
