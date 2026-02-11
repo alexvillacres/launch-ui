@@ -32,11 +32,6 @@ interface TabsProps {
   icon3?: React.ReactNode;
   icon4?: React.ReactNode;
   icon5?: React.ReactNode;
-  color1?: string;
-  color2?: string;
-  color3?: string;
-  color4?: string;
-  color5?: string;
   numberOfSlides?: number;
   spaceBetween?: number;
   autoplay?: boolean;
@@ -48,7 +43,6 @@ interface SlideData {
   title: string;
   description?: string;
   icon: React.ReactNode;
-  color?: string;
 }
 
 // Get slide title with fallback: explicit title -> alt text -> "Slide N"
@@ -83,35 +77,30 @@ function getActiveSlides(props: TabsProps): SlideData[] {
       title: props.title1,
       description: props.description1,
       icon: props.icon1,
-      color: props.color1,
     },
     {
       image: props.image2,
       title: props.title2,
       description: props.description2,
       icon: props.icon2,
-      color: props.color2,
     },
     {
       image: props.image3,
       title: props.title3,
       description: props.description3,
       icon: props.icon3,
-      color: props.color3,
     },
     {
       image: props.image4,
       title: props.title4,
       description: props.description4,
       icon: props.icon4,
-      color: props.color4,
     },
     {
       image: props.image5,
       title: props.title5,
       description: props.description5,
       icon: props.icon5,
-      color: props.color5,
     },
   ];
 
@@ -128,7 +117,6 @@ function getActiveSlides(props: TabsProps): SlideData[] {
         ),
         description: getSlideDescription(slide.description),
         icon: slide.icon,
-        color: slide.color,
       });
     }
   });
@@ -216,7 +204,7 @@ export default function Tabs(props: TabsProps) {
 
   const renderSlide = (slide: SlideData) => {
     return (
-      <div className="w-full rounded-sm overflow-hidden border-[0.5px] border-border border-solid">
+      <div className="w-full rounded-lg overflow-hidden">
         <img
           src={slide.image.src}
           alt={slide.image.alt || slide.title}
@@ -237,7 +225,7 @@ export default function Tabs(props: TabsProps) {
 
   return (
     <div ref={containerRef} className="w-full flex flex-col max-w-full">
-      <div className="hidden lg:flex items-center gap-4 bg-white border-solid border-t-[0.5px] border-l-[0.5px] border-r-[0.5px] border-border mx-2 rounded-tl-sm rounded-tr-sm overflow-hidden">
+      <div className="hidden md:flex items-center gap-4 bg-white border-solid border-t-[0.5px] border-l-[0.5px] border-r-[0.5px] border-border mx-2 rounded-tl-sm rounded-tr-sm overflow-hidden">
         {slideCount > 0 && (
           <div className="flex flex-grow divide-x-1 divide-border">
             {slides.map((slide, index) => {
@@ -247,11 +235,11 @@ export default function Tabs(props: TabsProps) {
                   key={index}
                   onClick={() => handleTabClick(index)}
                   type="button"
-                  className="relative flex flex-col flex-1 basis-0 min-w-0 items-start text-left text-[15px] leading-none gap-2 cursor-pointer p-3"
+                  className="relative flex flex-col flex-1 basis-0 min-w-0 items-start text-left text-[15px] leading-none gap-2 transition-opacity cursor-pointer p-3"
                   style={{
+                    opacity: isActive ? 1 : 0.5,
                     ["--progress-opacity" as string]: isActive ? "1" : "0",
-                    ["--progress-color" as string]: slide.color || "#3472D5",
-                    ["--tab-color" as string]: slide.color || "#3472D5",
+                    ["--progress-color" as string]: "#3472D5",
                     ["--progress-transform" as string]:
                       isActive && !(isAutoplayActive && isInView)
                         ? "scaleX(1)"
@@ -279,31 +267,20 @@ export default function Tabs(props: TabsProps) {
                       animationDuration: "var(--progress-duration)",
                     }}
                   />
-                  <div
-                    className={`flex flex-col gap-2 transition-opacity ${
-                      isActive ? "opacity-100" : "opacity-50 hover:opacity-100"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div
-                        className="w-4 h-4 flex items-center justify-center flex-shrink-0 [&>svg]:fill-current [&>svg]:stroke-current"
-                        style={{
-                          color: "var(--tab-color)",
-                        }}
-                      >
-                        {slide.icon}
-                      </div>
-                      <span className="text-[15px] font-medium leading-none whitespace-nowrap">
-                        {slide.title}
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-4 h-4 flex items-center justify-center flex-shrink-0 [&>svg]:fill-current [&>svg]:stroke-current">
+                      {slide.icon}
+                    </div>
+                    <span className="text-[15px] font-medium leading-none whitespace-nowrap">
+                      {slide.title}
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1 w-full min-w-0">
+                    {slide.description && (
+                      <span className="text-[13px] leading-snug break-words">
+                        {slide.description}
                       </span>
-                    </div>
-                    <div className="flex flex-col gap-1 w-full min-w-0">
-                      {slide.description && (
-                        <span className="text-[13px] leading-snug break-words">
-                          {slide.description}
-                        </span>
-                      )}
-                    </div>
+                    )}
                   </div>
                 </button>
               );
@@ -311,21 +288,10 @@ export default function Tabs(props: TabsProps) {
           </div>
         )}
       </div>
-      <div className="w-full lg:bg-surface bg-transparent lg:p-3 p-0 border-[0.5px] border-border lg:border-solid border-none rounded-md overflow-hidden">
+      <div className="w-full bg-surface p-3 border-[0.5px] border-border border-solid rounded-md">
         <Swiper
           spaceBetween={spaceBetween}
           slidesPerView={1}
-          breakpoints={{
-            480: {
-              slidesPerView: 1.1,
-            },
-            768: {
-              slidesPerView: 1.2,
-            },
-            1024: {
-              slidesPerView: 1,
-            },
-          }}
           speed={500}
           allowTouchMove={true}
           grabCursor={true}

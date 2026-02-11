@@ -31,13 +31,6 @@ const TabsComponent = declareComponent(Tabs, {
       group: "Slide 1",
       tooltip: "Icon for first slide",
     }),
-    color1: props.Text({
-      name: "Tab Color",
-      group: "Slide 1",
-      tooltip:
-        "Color for this tab's progress bar and icon (hex, rgb, or CSS color)",
-      defaultValue: "#3472D5",
-    }),
     // Slide 2
     image2: props.Image({
       name: "Image 2",
@@ -60,13 +53,6 @@ const TabsComponent = declareComponent(Tabs, {
       name: "Icon 2",
       group: "Slide 2",
       tooltip: "Icon for second slide",
-    }),
-    color2: props.Text({
-      name: "Tab Color",
-      group: "Slide 2",
-      tooltip:
-        "Color for this tab's progress bar and icon (hex, rgb, or CSS color)",
-      defaultValue: "#3472D5",
     }),
 
     // Slide 3
@@ -92,13 +78,6 @@ const TabsComponent = declareComponent(Tabs, {
       group: "Slide 3",
       tooltip: "Icon for third slide",
     }),
-    color3: props.Text({
-      name: "Tab Color",
-      group: "Slide 3",
-      tooltip:
-        "Color for this tab's progress bar and icon (hex, rgb, or CSS color)",
-      defaultValue: "#3472D5",
-    }),
 
     // Slide 4
     image4: props.Image({
@@ -123,13 +102,6 @@ const TabsComponent = declareComponent(Tabs, {
       group: "Slide 4",
       tooltip: "Icon for fourth slide",
     }),
-    color4: props.Text({
-      name: "Tab Color",
-      group: "Slide 4",
-      tooltip:
-        "Color for this tab's progress bar and icon (hex, rgb, or CSS color)",
-      defaultValue: "#3472D5",
-    }),
 
     // Slide 5
     image5: props.Image({
@@ -153,13 +125,6 @@ const TabsComponent = declareComponent(Tabs, {
       name: "Icon 5",
       group: "Slide 5",
       tooltip: "Icon for fifth slide",
-    }),
-    color5: props.Text({
-      name: "Tab Color",
-      group: "Slide 5",
-      tooltip:
-        "Color for this tab's progress bar and icon (hex, rgb, or CSS color)",
-      defaultValue: "#3472D5",
     }),
     // Configuration
     numberOfSlides: props.Number({
